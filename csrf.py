@@ -47,8 +47,6 @@ class BurpExtender(IBurpExtender, IHttpListener, IParameter):
         print "Gonna get token"
         self.getToken()
         request = currentMessage.getRequest()
-        parsedRequest = self._helpers.analyzeRequest(request)
-        requestBody = self._helpers.bytesToString(request[parsedRequest.getBodyOffset():])
 
         if BurpExtender.discoveredToken != '':
             currentMessage.setRequest(self._helpers.updateParameter(request, self._helpers.buildParameter("authenticity_token", self._helpers.urlEncode(BurpExtender.discoveredToken), self.PARAM_BODY)))
