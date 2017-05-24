@@ -44,8 +44,6 @@ class BurpExtender(IBurpExtender, IHttpListener, IParameter):
             print "Found a token."
 
     def processRequest(self, currentMessage):
-        requestHeaders = self._helpers.bytesToString(currentMessage.getRequest())
-
         print "Gonna get token"
         self.getToken()
         request = currentMessage.getRequest()
