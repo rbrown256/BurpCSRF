@@ -19,7 +19,7 @@ class BurpExtender(IBurpExtender, IHttpListener, IParameter):
     def registerExtenderCallbacks(self, callbacks):
         self._callbacks = callbacks
         self._helpers = callbacks.getHelpers()
-        callbacks.setExtensionName("RobB CSRF")
+        callbacks.setExtensionName("RobB CSRF Token Inline")
         callbacks.registerHttpListener(self)
         print "Extension registered successfully."
         return
