@@ -64,8 +64,8 @@ class BurpExtender(IBurpExtender, IHttpListener, IParameter):
             
                 for i in range(0, len(headers)):
                     if headers[i].startswith(header_name):
-                        print "Found the gotten darn header to replace"
-                        #headers[i][len(header_name)] = BurpExtender.discoveredToken
+                        print "Found header to replace"
+                        
                         new_headers.append(header_name + " " + BurpExtender.discoveredToken)
                     else:
                         new_headers.append(headers[i])
