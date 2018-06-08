@@ -1,4 +1,4 @@
-Created by Rob Brown - https://twitter.com/RB256
+Created by Rob Brown - https://twitter.com/RB256 - https://markitzeroday.com/
 
 # CSRF Extensions for Burp
 
