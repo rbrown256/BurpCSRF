@@ -1,9 +1,11 @@
 from burp import IBurpExtender
 from burp import IHttpListener
 from burp import IParameter
+from burp import IRequestInfo
 from java.net import URL
 
 import re
+import urllib
 import urlparse
 import ssl
 
@@ -12,7 +14,7 @@ import ssl
 
 csrfregex = re.compile(r'<meta name=\"csrf-token\" content=\"(.*?)\" />')
  
-class BurpExtender(IBurpExtender, IHttpListener, IParameter):
+class BurpExtender(IBurpExtender, IHttpListener, IParameter, IRequestInfo):
     # Variable to hold the token found so that it can be inserted in the next request
     discoveredToken = ''
 
@@ -49,7 +51,11 @@ class BurpExtender(IBurpExtender, IHttpListener, IParameter):
         request = currentMessage.getRequest()
 
         if BurpExtender.discoveredToken != '':
-            currentMessage.setRequest(self._helpers.updateParameter(request, self._helpers.buildParameter("authenticity_token", self._helpers.urlEncode(BurpExtender.discoveredToken), self.PARAM_BODY)))
+
+            parsedRequest = self._helpers.analyzeRequest(request)
+            raw_token = urllib.quote(BurpExtender.discoveredToken) if parsedRequest.getContentType() == BurpExtender.CONTENT_TYPE_URL_ENCODED else BurpExtender.discoveredToken
+
+            currentMessage.setRequest(self._helpers.updateParameter(request, self._helpers.buildParameter("authenticity_token", raw_token, self.PARAM_BODY)))
             print "Replaced the token."
         else:
             print "No token to replace."
