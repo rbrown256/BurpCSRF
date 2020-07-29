@@ -8,7 +8,7 @@ import urlparse
 import ssl
 
 # Find reg ex: <meta name="csrf-token" content=".*?" />
-# Replaec reg ex: authenticity_token= POST param
+# Replace reg ex: authenticity_token= POST param
 
 csrfregex = re.compile(r'<meta name=\"csrf-token\" content=\"(.*?)\" />')
  
